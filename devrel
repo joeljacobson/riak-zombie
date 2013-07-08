@@ -16,19 +16,19 @@ fi
 case "$1" in
 
 start)  echo "Starting Riak Devrel nodes"
-    for i in {1..3}; do $riak_path/dev$i/bin/riak start && echo "Riak node dev$i started"; done
+    for i in {1..5}; do $riak_path/dev$i/bin/riak start && echo "Riak node dev$i started"; done
     ;;
 stop)  echo  "Stopping Riak Devrel nodes"
-    for i in {1..3}; do $riak_path/dev$i/bin/riak stop; done
+    for i in {1..5}; do $riak_path/dev$i/bin/riak stop; done
     ;;
 ping)  echo  "Pinging Riak Devrel nodes"
-    for i in {1..3}; do $riak_path/dev$i/bin/riak ping; done
+    for i in {1..5}; do $riak_path/dev$i/bin/riak ping; done
     ;;
 chkconfig) echo  "Checking configs for Devrel nodes"
-    for i in {1..3}; do $riak_path/dev$i/bin/riak chkconfig; done
+    for i in {1..5}; do $riak_path/dev$i/bin/riak chkconfig; done
    ;;
 test) echo  "Checking configs for Devrel nodes"
-    for i in {1..3}; do $riak_path/dev$i/bin/riak-admin test; done
+    for i in {1..5}; do $riak_path/dev$i/bin/riak-admin test; done
    ;;
 *) echo $usage
    ;;
