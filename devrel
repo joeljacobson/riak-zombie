@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Simple control script for Riak Devrel environment
+
+ulimit -n 4096
+
+riak_path="/home/riak/riak-1.3.2/dev"
+usage="Usage : $0 start | stop | ping | chkconfig | test"
+
+if [ $# -lt 1 ]
+then
+        echo $usage
+        exit
+fi
+
+case "$1" in
+
+start)  echo "Starting Riak Devrel nodes"
+    for i in {1..3}; do $riak_path/dev$i/bin/riak start && echo "Riak node dev$i started"; done
+    ;;
+stop)  echo  "Stopping Riak Devrel nodes"
+    for i in {1..3}; do $riak_path/dev$i/bin/riak stop; done
+    ;;
+ping)  echo  "Pinging Riak Devrel nodes"
+    for i in {1..3}; do $riak_path/dev$i/bin/riak ping; done
+    ;;
+chkconfig) echo  "Checking configs for Devrel nodes"
+    for i in {1..3}; do $riak_path/dev$i/bin/riak chkconfig; done
+   ;;
+test) echo  "Checking configs for Devrel nodes"
+    for i in {1..3}; do $riak_path/dev$i/bin/riak-admin test; done
+   ;;
+*) echo $usage
+   ;;
+esac
