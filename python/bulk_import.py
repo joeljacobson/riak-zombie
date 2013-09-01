@@ -2,7 +2,7 @@ import csv
 import json
 import riak
 
-client = riak.RiakClient()
+client = riak.RiakClient(pb_port=8087, protocol='pbc')
 bucket = client.bucket('za')
 
 f = open("ZA10K.csv", "r")
