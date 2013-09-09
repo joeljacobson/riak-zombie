@@ -3,12 +3,14 @@
 require 'csv'
 require 'riak'
 require 'ruby-progressbar'
+require 'multi_json'
+require 'oj'
 
 RIAK_HOST      = '127.0.0.1'
 RIAK_PB_PORT   = 11087
 RIAK_HTTP_PORT = 11098
 ZOMBIE_BUCKET  = 'za'
-DATA_FILE      = 'data/ZA10k.csv'
+DATA_FILE      = 'data/ZA5c.csv'
 
 def client(host = nil)
   @client ||= Riak::Client.new(:host => riak_host(host), :protocol => 'pbc', :pb_port => RIAK_PB_PORT)
@@ -43,7 +45,7 @@ def endpoints(ep = nil)
   [@endpoints << ep].flatten.compact
 end
 
-def store_indices(record, snack)
+def build_indices(record, snack)
   record.indexes['sex_bin']    << snack[:sex]    if snack[:sex]
   record.indexes['blood_bin']  << snack[:blood]  if snack[:blood]
   record.indexes['weight_bin'] << snack[:weight] if snack[:weight]
@@ -55,8 +57,11 @@ def store!
     progress.increment
     key                 = snack[:social]
     record              = bucket.get_or_new(key)
+
     record.data         = snack
-    store_indices(record, snack)
+
+    build_indices(record, snack)
+
     record.store
     endpoints(endpoint(:key => key))
   end
