@@ -10,7 +10,7 @@ RIAK_HOST      = '127.0.0.1'
 RIAK_PB_PORT   = 11087
 RIAK_HTTP_PORT = 11098
 ZOMBIE_BUCKET  = 'za'
-DATA_FILE      = 'data/ZA5c.csv'
+DATA_FILE      = 'data/ZA10k.csv'
 
 def client(host = nil)
   @client ||= Riak::Client.new(:host => riak_host(host), :protocol => 'pbc', :pb_port => RIAK_PB_PORT)
